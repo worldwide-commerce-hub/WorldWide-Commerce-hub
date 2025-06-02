@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WCH Client Registration</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f4faff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 450px;
+      margin: 50px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 255, 0.1);
+      text-align: center;
+    }
+
+    .logo img {
+      width: 120px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      color: #004aad;
+      margin-bottom: 25px;
+    }
+
+    input, label, textarea {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      font-size: 14px;
+    }
+
+    input[type="text"], input[type="email"], textarea {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 20px;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .note {
+      font-size: 12px;
+      color: gray;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <img src="logo.png" alt="WCH Logo" />
+    </div>
+    <h2>Upload Documents via Google Drive</h2>
+    <form id="upload-form">
+      <input type="text" name="name" placeholder="Full Name" required />
+      <input type="email" name="email" placeholder="Email Address" required />
+      <label>Paste Google Drive Link (CNIC + Bank Statement)</label>
+      <textarea name="drive_link" placeholder="https://drive.google.com/..." required></textarea>
+      <button type="submit">Submit</button>
+    </form>
+    <div class="note">Please upload your documents to Google Drive and paste the shareable link above.</div>
+  </div>
+
+  <!-- EmailJS Script -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function(){
+      emailjs.init("I-gZLyFd71oJEMXzG"); // <-- Public Key
+    })();
+
+    document.getElementById("upload-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      
+      emailjs.sendForm("service_2qcqylg", "template_7nx9b9j", this)
+        .then(function() {
+          alert("Documents link sent successfully!");
+        }, function(error) {
+          alert("Failed to send: " + JSON.stringify(error));
+        });
+    });
+  </script>
+</body>
+</html>
